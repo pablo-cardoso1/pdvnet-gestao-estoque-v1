@@ -1,94 +1,79 @@
-# ?? PDVNet - Sistema de Gestão de Estoque
+# ğŸª PDVNet - Sistema de GestÃ£o de Estoque
 
-Sistema desktop completo para gerenciamento de produtos em estoque, desenvolvido em **C# WPF** com **SQL Server**, seguindo arquitetura em camadas e padrão MVVM.
+Sistema desktop completo para gerenciamento de produtos em estoque, desenvolvido em **C# WPF** com **SQL Server**, seguindo arquitetura em camadas e padrÃ£o MVVM.
 
-## ?? Objetivo do Projeto
+## ğŸ¯ Objetivo do Projeto
 
 Sistema desenvolvido para processo seletivo da PDVNet, demonstrando habilidades em:
 - Desenvolvimento C# WPF com MVVM
-- Estruturação de banco de dados SQL Server
-- Implementação de operações CRUD
-- Organização em camadas (UI, Business, Data, Model)
-- Validações de negócio e testes unitários
+- EstruturaÃ§Ã£o de banco de dados SQL Server
+- ImplementaÃ§Ã£o de operaÃ§Ãµes CRUD
+- OrganizaÃ§Ã£o em camadas (UI, Business, Data, Model)
+- ValidaÃ§Ãµes de negÃ³cio e testes unitÃ¡rios
 
-## ?? Funcionalidades Implementadas
+## ğŸ“‹ Funcionalidades Implementadas
 
-### ?? CRUD Completo
-- ? **Cadastrar** novos produtos
-- ? **Listar** todos os produtos em DataGrid
-- ? **Editar** produtos existentes
-- ? **Excluir** produtos com confirmação
+### ğŸš€ CRUD Completo
+- âœ… **Cadastrar** novos produtos
+- âœ… **Listar** todos os produtos em DataGrid
+- âœ… **Editar** produtos existentes
+- âœ… **Excluir** produtos com confirmaÃ§Ã£o
 
-### ?? Dashboard e Relatórios
-- ? **Total de produtos** cadastrados
-- ? **Valor total do estoque** (somatório Preço × Quantidade)
-- ? **Alertas de estoque baixo** (quantidade < 5)
-- ? **Lista em tempo real** de produtos com estoque crítico
+### ğŸ“Š Dashboard e RelatÃ³rios
+- âœ… **Total de produtos** cadastrados
+- âœ… **Valor total do estoque** (somatÃ³rio PreÃ§o Ã— Quantidade)
+- âœ… **Alertas de estoque baixo** (quantidade < 5)
+- âœ… **Lista em tempo real** de produtos com estoque crÃ­tico
 
-### ??? Validações e Regras de Negócio
-- ? **Campos obrigatórios**: Nome, Preço, Quantidade
-- ? **Valores não negativos**: Preço ? 0.01, Quantidade ? 0
-- ? **Data de cadastro** automática (definida no banco de dados)
-- ? **Validação em tempo real** com Data Annotations
+### ğŸ›¡ï¸ ValidaÃ§Ãµes e Regras de NegÃ³cio
+- âœ… **Campos obrigatÃ³rios**: Nome, PreÃ§o, Quantidade
+- âœ… **Valores nÃ£o negativos**: PreÃ§o â‰¥ 0.01, Quantidade â‰¥ 0
+- âœ… **Data de cadastro** automÃ¡tica
+- âœ… **ValidaÃ§Ã£o em tempo real** com Data Annotations
 
-## ??? Arquitetura e Tecnologias
+## ğŸ—ï¸ Arquitetura e Tecnologias
 
-### ?? Estrutura do Projeto
+### ğŸ“ Estrutura do Projeto
 
 ```
 PDVnet.GestaoProdutos/
-??? ?? PDVnet.GestaoProdutos.UI/          # WPF + MVVM (Views/ViewModels)
-??? ?? PDVnet.GestaoProdutos.Business/     # Lógica de negócio + Validações
-??? ??? PDVnet.GestaoProdutos.Data/         # Acesso a dados (Repository)
-??? ?? PDVnet.GestaoProdutos.Model/        # Entidades e Models
-??? ?? PDVnet.GestaoProdutos.Tests/        # Testes unitários (MSTest)
+â”œâ”€â”€ ğŸ“± PDVnet.GestaoProdutos.UI/          # WPF + MVVM (Views/ViewModels)
+â”œâ”€â”€ âš™ï¸ PDVnet.GestaoProdutos.Business/     # LÃ³gica de negÃ³cio + ValidaÃ§Ãµes
+â”œâ”€â”€ ğŸ—„ï¸ PDVnet.GestaoProdutos.Data/         # Acesso a dados (Repository)
+â”œâ”€â”€ ğŸ“¦ PDVnet.GestaoProdutos.Model/        # Entidades e Models
+â””â”€â”€ ğŸ§ª PDVnet.GestaoProdutos.Tests/        # Testes unitÃ¡rios (MSTest)
 ```
 
-### ?? Stack Tecnológica
+### ğŸ›  Stack TecnolÃ³gica
 - **Frontend**: WPF, XAML, MVVM Pattern
-- **Backend**: C#, .NET 8.0
-- **Database**: SQL Server + ADO.NET (Microsoft.Data.SqlClient)
-- **Validação**: Data Annotations + validações no ViewModel
+- **Backend**: C#, .NET 6.0
+- **Database**: SQL Server + ADO.NET
+- **ValidaÃ§Ã£o**: Data Annotations + Custom Validation
 - **Testes**: MSTest Framework
 - **Commands**: RelayCommand Pattern
 
-## ?? Como Executar
+## ğŸš€ Como Executar
 
-### Pré-requisitos
+### PrÃ©-requisitos
 - **SQL Server** (Express, Developer ou LocalDB)
 - **.NET 8.0 SDK** ou superior
-- **Visual Studio 2022/2023** (com workload de .NET desktop)
+- **Visual Studio 2022**
 
-### ?? Configuração Passo a Passo
+### ğŸ“¥ ConfiguraÃ§Ã£o Passo a Passo
 
 #### 1. **Banco de Dados**
-
-O script está em `PDVnet.GestaoProdutos.Data\Scripts\CreateDatabase.sql`.
-
-Opções para executar o script:
-
-- Usando SQL Server Management Studio (SSMS): abra o arquivo e clique em "Execute" apontando para a instância desejada.
-
-- Usando `sqlcmd` (exemplo para SQLEXPRESS):
-
-```bash
-sqlcmd -S .\SQLEXPRESS -i "PDVnet.GestaoProdutos.Data\Scripts\CreateDatabase.sql"
+```sql
+-- Execute o script em Scripts/CreateDatabase.sql
+-- O script cria:
+-- - Database PDVnet_GestaoProdutos
+-- - Tabela Produtos com constraints
+-- - Dados de exemplo
+-- - Views para relatÃ³rios
 ```
-
-- Usando LocalDB (inicie a instância e altere connection string para `(localdb)\MSSQLLocalDB` se preferir):
-
-```powershell
-sqllocaldb start "MSSQLLocalDB"
-sqlcmd -S (localdb)\\MSSQLLocalDB -i "PDVnet.GestaoProdutos.Data\Scripts\CreateDatabase.sql"
-```
-
-> Observação: o script cria o banco `PDVnet_GestaoProdutos`, a tabela `Produtos`, um índice e insere alguns dados de exemplo.
 
 #### 2. **Connection String**
-
-Verifique e ajuste a connection string presente em `PDVnet.GestaoProdutos.UI\App.config` (projeto `PDVnet.GestaoProdutos.UI`). Exemplo padrão usado no projeto:
-
 ```xml
+<!-- No App.config do projeto UI -->
 <connectionStrings>
   <add name="DefaultConnection" 
        connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=PDVnet_GestaoProdutos;Integrated Security=true;TrustServerCertificate=true;"
@@ -96,59 +81,41 @@ Verifique e ajuste a connection string presente em `PDVnet.GestaoProdutos.UI\App
 </connectionStrings>
 ```
 
-- Para usar LocalDB, substitua `Data Source` por `(localdb)\MSSQLLocalDB`.
-- Assegure-se de que o `App.config` com essa connection string esteja no projeto de startup (`PDVnet.GestaoProdutos.UI`).
+#### 3. **Executar AplicaÃ§Ã£o**
+- Defina `PDVnet.GestaoProdutos.UI` como Startup Project
+- Pressione **F5** para executar
 
-#### 3. **Build e Execução**
+### ğŸ§ª Executando Testes
+- Abra **Test Explorer** (View â†’ Test Explorer)
+- Execute todos os testes
+- 5 testes unitÃ¡rios devem passar com sucesso
 
-- Pelo Visual Studio: abra a solução, defina `PDVnet.GestaoProdutos.UI` como *Startup Project* e pressione **F5**.
-
-- Pela CLI:
-
-```bash
-dotnet build
-cd PDVnet.GestaoProdutos.UI
-dotnet run
-```
-
-(Na prática o `dotnet run` em WPF normalmente é feito via Visual Studio; use o IDE para debugging/execução.)
-
-### ?? Executando Testes
-
-Existem 5 testes unitários de validação (arquivo `PDVnet.GestaoProdutos.Tests\ProdutoTests.cs`). Para rodar os testes:
-
-```bash
-dotnet test PDVnet.GestaoProdutos.Tests
-```
-
-## ?? Estrutura do Banco
+## ğŸ“Š Estrutura do Banco
 
 ### Tabela `Produtos`
 
-| Coluna | Tipo | Descrição |
+| Coluna | Tipo | DescriÃ§Ã£o |
 |--------|------|-----------|
-| Id | INT IDENTITY(1,1) | Chave primária |
+| Id | INT IDENTITY(1,1) | Chave primÃ¡ria |
 | Nome | NVARCHAR(100) NOT NULL | Nome do produto |
-| Descricao | NVARCHAR(255) NULL | Descrição opcional |
-| Preco | DECIMAL(10,2) NOT NULL | Preço unitário (? 0) |
-| Quantidade | INT NOT NULL | Quantidade em estoque (? 0) |
+| Descricao | NVARCHAR(255) NULL | DescriÃ§Ã£o opcional |
+| Preco | DECIMAL(10,2) NOT NULL | PreÃ§o unitÃ¡rio (â‰¥ 0) |
+| Quantidade | INT NOT NULL | Quantidade em estoque (â‰¥ 0) |
 | DataCadastro | DATETIME NOT NULL | Data de cadastro (DEFAULT GETDATE()) |
 
-> Observação: a fonte da verdade para `DataCadastro` é o banco (DEFAULT GETDATE()). O model também inicializa `DateTime.Now` para conveniência em memória, mas recomenda-se confiar no valor do banco ao persistir.
-
-## ?? Funcionalidades da Interface
+## ğŸ¨ Funcionalidades da Interface
 
 ### Tela Principal
 - DataGrid com lista completa de produtos
-- Botões de ação (Novo, Editar, Excluir, Atualizar)
-- Dashboard com métricas em tempo real
+- BotÃµes de aÃ§Ã£o (Novo, Editar, Excluir, Atualizar)
+- Dashboard com mÃ©tricas em tempo real
 - Alertas visuais para estoque baixo
 
-### Formulário de Produto
-- Validação em tempo real
+### FormulÃ¡rio de Produto
+- ValidaÃ§Ã£o em tempo real
 - Modo Editar/Adicionar
 - Mensagens de erro contextualizadas
+- Interface responsiva
 
-## Desenvolvido Por:
-
-Pablo Cardoso para o processo seletivo da PDVNet.
+## Desenvolvido por:
+Pablo Cardoso para o processo seletivo da PDVnet
