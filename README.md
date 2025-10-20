@@ -46,7 +46,7 @@ PDVnet.GestaoProdutos/
 
 ### 🛠 Stack Tecnológica
 - **Frontend**: WPF, XAML, MVVM Pattern
-- **Backend**: C#, .NET 6.0
+- **Backend**: C#, .NET 8.0
 - **Database**: SQL Server + ADO.NET
 - **Validação**: Data Annotations + Custom Validation
 - **Testes**: MSTest Framework
