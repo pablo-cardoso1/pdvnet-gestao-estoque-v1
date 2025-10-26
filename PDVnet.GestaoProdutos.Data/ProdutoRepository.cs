@@ -16,7 +16,7 @@ namespace PDVnet.GestaoProdutos.Data
             {
                 connection.Open();
 
-                var query = "SELECT Id, Nome, Descricao, Preco, Quantidade, DataCadastro FROM Produtos";
+                var query = "SELECT Id, Nome, Descricao, Preco, Quantidade, DataCadastro, DataAtualizacao FROM Produtos";
 
                 using (var command = new SqlCommand(query, connection))
                 using (var reader = command.ExecuteReader())
@@ -29,6 +29,7 @@ namespace PDVnet.GestaoProdutos.Data
                         var idxPreco = reader.GetOrdinal("Preco");
                         var idxQuantidade = reader.GetOrdinal("Quantidade");
                         var idxDataCadastro = reader.GetOrdinal("DataCadastro");
+                        var idxDataAtualizacao = reader.GetOrdinal("DataAtualizacao");
 
                         produtos.Add(new Produto
                         {
@@ -36,8 +37,9 @@ namespace PDVnet.GestaoProdutos.Data
                             Nome = reader.GetString(idxNome),
                             Descricao = reader.IsDBNull(idxDescricao) ? null : reader.GetString(idxDescricao),
                             Preco = reader.GetDecimal(idxPreco),
-                            Quantidade = reader.GetInt32(idxQuantidade),
-                            DataCadastro = reader.GetDateTime(idxDataCadastro)
+                            Quantidade = reader.GetDecimal(idxQuantidade),
+                            DataCadastro = reader.GetDateTime(idxDataCadastro),
+                            DataAtualizacao = reader.IsDBNull(idxDataAtualizacao) ? null : reader.GetDateTime(idxDataAtualizacao)
                         });
                     }
                 }
@@ -54,7 +56,7 @@ namespace PDVnet.GestaoProdutos.Data
             {
                 await connection.OpenAsync();
 
-                var query = "SELECT Id, Nome, Descricao, Preco, Quantidade, DataCadastro FROM Produtos";
+                var query = "SELECT Id, Nome, Descricao, Preco, Quantidade, DataCadastro, DataAtualizacao FROM Produtos";
 
                 using (var command = new SqlCommand(query, connection))
                 using (var reader = await command.ExecuteReaderAsync())
@@ -67,6 +69,7 @@ namespace PDVnet.GestaoProdutos.Data
                         var idxPreco = reader.GetOrdinal("Preco");
                         var idxQuantidade = reader.GetOrdinal("Quantidade");
                         var idxDataCadastro = reader.GetOrdinal("DataCadastro");
+                        var idxDataAtualizacao = reader.GetOrdinal("DataAtualizacao");
 
                         produtos.Add(new Produto
                         {
@@ -74,8 +77,9 @@ namespace PDVnet.GestaoProdutos.Data
                             Nome = reader.GetString(idxNome),
                             Descricao = reader.IsDBNull(idxDescricao) ? null : reader.GetString(idxDescricao),
                             Preco = reader.GetDecimal(idxPreco),
-                            Quantidade = reader.GetInt32(idxQuantidade),
-                            DataCadastro = reader.GetDateTime(idxDataCadastro)
+                            Quantidade = reader.GetDecimal(idxQuantidade),
+                            DataCadastro = reader.GetDateTime(idxDataCadastro),
+                            DataAtualizacao = reader.IsDBNull(idxDataAtualizacao) ? null : reader.GetDateTime(idxDataAtualizacao)
                         });
                     }
                 }
@@ -103,7 +107,10 @@ namespace PDVnet.GestaoProdutos.Data
                     precoParam.Scale = 2;
                     precoParam.Value = produto.Preco;
 
-                    command.Parameters.Add("@Quantidade", SqlDbType.Int).Value = produto.Quantidade;
+                    var quantidadeParam = command.Parameters.Add("@Quantidade", SqlDbType.Decimal);
+                    quantidadeParam.Precision = 10;
+                    quantidadeParam.Scale = 2;
+                    quantidadeParam.Value = produto.Quantidade;
 
                     command.ExecuteNonQuery();
                 }
@@ -129,7 +136,10 @@ namespace PDVnet.GestaoProdutos.Data
                     precoParam.Scale = 2;
                     precoParam.Value = produto.Preco;
 
-                    command.Parameters.Add("@Quantidade", SqlDbType.Int).Value = produto.Quantidade;
+                    var quantidadeParam = command.Parameters.Add("@Quantidade", SqlDbType.Decimal);
+                    quantidadeParam.Precision = 10;
+                    quantidadeParam.Scale = 2;
+                    quantidadeParam.Value = produto.Quantidade;
 
                     await command.ExecuteNonQueryAsync();
                 }
@@ -142,7 +152,7 @@ namespace PDVnet.GestaoProdutos.Data
             {
                 connection.Open();
 
-                var query = "SELECT Id, Nome, Descricao, Preco, Quantidade, DataCadastro FROM Produtos WHERE Id = @Id";
+                var query = "SELECT Id, Nome, Descricao, Preco, Quantidade, DataCadastro, DataAtualizacao FROM Produtos WHERE Id = @Id";
 
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -158,6 +168,7 @@ namespace PDVnet.GestaoProdutos.Data
                             var idxPreco = reader.GetOrdinal("Preco");
                             var idxQuantidade = reader.GetOrdinal("Quantidade");
                             var idxDataCadastro = reader.GetOrdinal("DataCadastro");
+                            var idxDataAtualizacao = reader.GetOrdinal("DataAtualizacao");
 
                             return new Produto
                             {
@@ -165,8 +176,9 @@ namespace PDVnet.GestaoProdutos.Data
                                 Nome = reader.GetString(idxNome),
                                 Descricao = reader.IsDBNull(idxDescricao) ? null : reader.GetString(idxDescricao),
                                 Preco = reader.GetDecimal(idxPreco),
-                                Quantidade = reader.GetInt32(idxQuantidade),
-                                DataCadastro = reader.GetDateTime(idxDataCadastro)
+                                Quantidade = reader.GetDecimal(idxQuantidade),
+                                DataCadastro = reader.GetDateTime(idxDataCadastro),
+                                DataAtualizacao = reader.IsDBNull(idxDataAtualizacao) ? null : reader.GetDateTime(idxDataAtualizacao)
                             };
                         }
                     }
@@ -182,7 +194,7 @@ namespace PDVnet.GestaoProdutos.Data
             {
                 await connection.OpenAsync();
 
-                var query = "SELECT Id, Nome, Descricao, Preco, Quantidade, DataCadastro FROM Produtos WHERE Id = @Id";
+                var query = "SELECT Id, Nome, Descricao, Preco, Quantidade, DataCadastro, DataAtualizacao FROM Produtos WHERE Id = @Id";
 
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -198,6 +210,7 @@ namespace PDVnet.GestaoProdutos.Data
                             var idxPreco = reader.GetOrdinal("Preco");
                             var idxQuantidade = reader.GetOrdinal("Quantidade");
                             var idxDataCadastro = reader.GetOrdinal("DataCadastro");
+                            var idxDataAtualizacao = reader.GetOrdinal("DataAtualizacao");
 
                             return new Produto
                             {
@@ -205,8 +218,9 @@ namespace PDVnet.GestaoProdutos.Data
                                 Nome = reader.GetString(idxNome),
                                 Descricao = reader.IsDBNull(idxDescricao) ? null : reader.GetString(idxDescricao),
                                 Preco = reader.GetDecimal(idxPreco),
-                                Quantidade = reader.GetInt32(idxQuantidade),
-                                DataCadastro = reader.GetDateTime(idxDataCadastro)
+                                Quantidade = reader.GetDecimal(idxQuantidade),
+                                DataCadastro = reader.GetDateTime(idxDataCadastro),
+                                DataAtualizacao = reader.IsDBNull(idxDataAtualizacao) ? null : reader.GetDateTime(idxDataAtualizacao)
                             };
                         }
                     }
@@ -224,7 +238,7 @@ namespace PDVnet.GestaoProdutos.Data
 
                 var query = @"UPDATE Produtos 
                               SET Nome = @Nome, Descricao = @Descricao, 
-                                  Preco = @Preco, Quantidade = @Quantidade 
+                                  Preco = @Preco, Quantidade = @Quantidade, DataAtualizacao = GETDATE() 
                               WHERE Id = @Id";
 
                 using (var command = new SqlCommand(query, connection))
@@ -233,12 +247,15 @@ namespace PDVnet.GestaoProdutos.Data
                     command.Parameters.Add("@Nome", SqlDbType.NVarChar, 100).Value = (object)produto.Nome ?? DBNull.Value;
                     command.Parameters.Add("@Descricao", SqlDbType.NVarChar, 255).Value = (object)produto.Descricao ?? DBNull.Value;
 
-                            var precoParam = command.Parameters.Add("@Preco", SqlDbType.Decimal);
+                    var precoParam = command.Parameters.Add("@Preco", SqlDbType.Decimal);
                     precoParam.Precision = 10;
                     precoParam.Scale = 2;
                     precoParam.Value = produto.Preco;
 
-                    command.Parameters.Add("@Quantidade", SqlDbType.Int).Value = produto.Quantidade;
+                    var quantidadeParam = command.Parameters.Add("@Quantidade", SqlDbType.Decimal);
+                    quantidadeParam.Precision = 10;
+                    quantidadeParam.Scale = 2;
+                    quantidadeParam.Value = produto.Quantidade;
 
                     command.ExecuteNonQuery();
                 }
@@ -253,7 +270,7 @@ namespace PDVnet.GestaoProdutos.Data
 
                 var query = @"UPDATE Produtos 
                               SET Nome = @Nome, Descricao = @Descricao, 
-                                  Preco = @Preco, Quantidade = @Quantidade 
+                                  Preco = @Preco, Quantidade = @Quantidade, DataAtualizacao = GETDATE() 
                               WHERE Id = @Id";
 
                 using (var command = new SqlCommand(query, connection))
@@ -267,7 +284,10 @@ namespace PDVnet.GestaoProdutos.Data
                     precoParam.Scale = 2;
                     precoParam.Value = produto.Preco;
 
-                    command.Parameters.Add("@Quantidade", SqlDbType.Int).Value = produto.Quantidade;
+                    var quantidadeParam = command.Parameters.Add("@Quantidade", SqlDbType.Decimal);
+                    quantidadeParam.Precision = 10;
+                    quantidadeParam.Scale = 2;
+                    quantidadeParam.Value = produto.Quantidade;
 
                     await command.ExecuteNonQueryAsync();
                 }

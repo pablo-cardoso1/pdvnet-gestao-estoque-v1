@@ -1,6 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using System.Globalization;
+using System.Windows.Controls;
 using PDVnet.GestaoProdutos.UI.ViewModels;
 
 namespace PDVnet.GestaoProdutos.UI.Views
@@ -20,9 +22,47 @@ namespace PDVnet.GestaoProdutos.UI.Views
             DataContext = viewModel;
         }
 
+        // Quando o TextBox recebe foco, seleciona todo o texto para que a primeira digitação substitua o conteúdo
+        private void TextBox_SelectAll(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tb)
+            {
+                tb.SelectAll();
+            }
+        }
+
+        // Garante que um clique com o mouse no TextBox também selecione tudo (em vez de só posicionar o caret)
+        private void TextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (tb != null && !tb.IsKeyboardFocusWithin)
+            {
+                e.Handled = true;
+                tb.Focus();
+            }
+        }
+
         // Permite digitar números e separador decimal (ponto ou vírgula)
         private void NumericOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            var tb = sender as TextBox;
+
+            // If the textbox currently shows the formatted zero (e.g. "0,00" or "0.00"),
+            // replace it on the first key press so the user doesn't end up with "32.25.00".
+            if (tb != null)
+            {
+                var formattedZero = 0m.ToString("N2", CultureInfo.CurrentCulture);
+
+                if (tb.Text == formattedZero && _decimalRegex.IsMatch(e.Text))
+                {
+                    // Replace the entire text with the newly typed character(s)
+                    tb.Text = e.Text;
+                    tb.CaretIndex = tb.Text.Length;
+                    e.Handled = true; // we've handled the input
+                    return;
+                }
+            }
+
             e.Handled = !_decimalRegex.IsMatch(e.Text);
         }
 
@@ -64,6 +104,11 @@ namespace PDVnet.GestaoProdutos.UI.Views
             {
                 e.CancelCommand();
             }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

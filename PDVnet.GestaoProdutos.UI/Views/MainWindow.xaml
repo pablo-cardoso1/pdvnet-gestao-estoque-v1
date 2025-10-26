@@ -83,6 +83,7 @@
                 <DataGridTextColumn Header="Preço" Binding="{Binding Preco, StringFormat='{}{0:C}'}" Width="100"/>
                 <DataGridTextColumn Header="Estoque" Binding="{Binding Quantidade}" Width="80"/>
                 <DataGridTextColumn Header="Data Cadastro" Binding="{Binding DataCadastro, StringFormat='{}{0:dd/MM/yyyy}'}" Width="120"/>
+                <DataGridTextColumn Header="Última Atualização" Binding="{Binding DataAtualizacao, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" Width="160"/>
             </DataGrid.Columns>
         </DataGrid>
 

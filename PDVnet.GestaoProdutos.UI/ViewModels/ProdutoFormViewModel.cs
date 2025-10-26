@@ -37,10 +37,14 @@ namespace PDVnet.GestaoProdutos.UI.ViewModels
                     Descricao = produto.Descricao,
                     Preco = produto.Preco,
                     Quantidade = produto.Quantidade,
-                    DataCadastro = produto.DataCadastro
+                    DataCadastro = produto.DataCadastro,
+                    DataAtualizacao = produto.DataAtualizacao
                 };
                 Titulo = "Editar Produto";
             }
+
+            // garante que a representação de DataAtualizacao seja atualizada na view
+            OnPropertyChanged(nameof(DataAtualizacaoDisplay));
 
             SalvarCommand = new RelayCommand(async () => await SalvarAsync(), PodeSalvar);
             CancelarCommand = new RelayCommand(Cancelar);
@@ -49,7 +53,13 @@ namespace PDVnet.GestaoProdutos.UI.ViewModels
         public Produto Produto
         {
             get => _produto;
-            set => SetProperty(ref _produto, value);
+            set
+            {
+                if (SetProperty(ref _produto, value))
+                {
+                    OnPropertyChanged(nameof(DataAtualizacaoDisplay));
+                }
+            }
         }
 
         public string Titulo
@@ -57,6 +67,8 @@ namespace PDVnet.GestaoProdutos.UI.ViewModels
             get => _titulo;
             set => SetProperty(ref _titulo, value);
         }
+
+        public string? DataAtualizacaoDisplay => Produto?.DataAtualizacao?.ToString("g");
 
         public ICommand SalvarCommand { get; }
         public ICommand CancelarCommand { get; }
@@ -92,6 +104,11 @@ namespace PDVnet.GestaoProdutos.UI.ViewModels
                         MostrarErrosValidacao(errosValidacao);
                         return;
                     }
+
+                    // Atualiza timestamp local imediatamente para feedback no formulário
+                    Produto.DataAtualizacao = System.DateTime.Now;
+                    OnPropertyChanged(nameof(Produto));
+                    OnPropertyChanged(nameof(DataAtualizacaoDisplay));
                 }
 
                 Sucesso = true;

@@ -19,9 +19,12 @@ namespace PDVnet.GestaoProdutos.Model
         public decimal Preco { get; set; }
 
         [Required(ErrorMessage = "A quantidade do produto é obrigatória.")]
-        [Range(0, int.MaxValue, ErrorMessage = "A quantidade não pode ser negativa.")]
-        public int Quantidade { get; set; }
+        [Range(0.0, double.MaxValue, ErrorMessage = "A quantidade não pode ser negativa.")]
+        public decimal Quantidade { get; set; }
 
         public DateTime DataCadastro { get; set; } = DateTime.Now;
+
+        // Data da última atualização do registro (nullable para novos registros)
+        public DateTime? DataAtualizacao { get; set; }
     }
 }

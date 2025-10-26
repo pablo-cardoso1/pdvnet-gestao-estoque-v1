@@ -47,33 +47,42 @@
 
                 <StackPanel Grid.Column="0">
                     <Label Content="Preço:" FontWeight="Bold"/>
-                    <TextBox Text="{Binding Produto.Preco, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DecimalConverter}, ValidatesOnExceptions=True, NotifyOnValidationError=True}" 
+                    <TextBox Text="{Binding Produto.Preco, UpdateSourceTrigger=LostFocus, Mode=TwoWay, Converter={StaticResource DecimalConverter}, ValidatesOnExceptions=True, NotifyOnValidationError=True}" 
                              Height="25"
                              PreviewTextInput="NumericOnly_PreviewTextInput"
-                             DataObject.Pasting="NumericOnly_Pasting"/>
+                             DataObject.Pasting="NumericOnly_Pasting"
+                             GotFocus="TextBox_SelectAll"
+                             PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2">
                     <Label Content="Quantidade:" FontWeight="Bold"/>
                     <TextBox Text="{Binding Produto.Quantidade, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True}" 
                              Height="25"
-                             PreviewTextInput="IntegerOnly_PreviewTextInput"
-                             DataObject.Pasting="IntegerOnly_Pasting"/>
+                             PreviewTextInput="NumericOnly_PreviewTextInput"
+                             DataObject.Pasting="NumericOnly_Pasting"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
 
         <!-- Botões -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Cancelar" 
-                    Command="{Binding CancelarCommand}"
-                    Width="80" Height="30" 
-                    Margin="0,0,10,0"/>
+        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" 
+                        Command="{Binding CancelarCommand}"
+                        Width="80" Height="30" 
+                        Margin="0,0,10,0"/>
 
-            <Button Content="Salvar" 
-                    Command="{Binding SalvarCommand}"
-                    Width="80" Height="30" 
-                    Background="#FF0078D7" Foreground="White"/>
+                <Button Content="Salvar" 
+                        Command="{Binding SalvarCommand}"
+                        Width="80" Height="30" 
+                        Background="#FF0078D7" Foreground="White"/>
+            </StackPanel>
+
+            <!-- Data de atualização exibida abaixo dos botões -->
+            <TextBlock Text="{Binding DataAtualizacaoDisplay}" 
+                       FontSize="11" Foreground="Gray" 
+                       HorizontalAlignment="Right" Margin="0,8,0,0"/>
         </StackPanel>
     </Grid>
 </Window>
